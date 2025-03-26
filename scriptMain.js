@@ -94,17 +94,18 @@ function validateForm() {
 }
 
 function getStuShift() {
-    const radios = document.getElementsByName("inputShift");
+    const radios = document.getElementsByName("periodRadio");
     let stuShift = "";
 
     for (let radio of radios) {
         if (radio.checked == true) {
-            let selector = `label[for=\"${radio.id}\"]`
+            let selector = `label[for=${radio.id}]`
 
             stuShift = document.querySelector(selector).innerHTML;
         }
     }
 
+    console.log(stuShift)
     return stuShift;
 }
 
@@ -117,12 +118,6 @@ function clearForm() {
     for (let option of stdOptions) {
         option.selected = 'selected';
     }
-
-    const checkboxes = document.getElementsByClassName("origin-check");
-
-    for (let checkbox of checkboxes) {
-        checkbox.checked = false;
-    }
 }
 
 function submitForm(){
@@ -134,7 +129,7 @@ function submitForm(){
     regStudents.push({
         name: document.getElementById("inputName").value,
         email: document.getElementById("inputEmail").value,
-        phone: parseFloat(document.getElementById("inputPhone").value),
+        phone: document.getElementById("inputPhone").value.replace(/\D/g, ""),
         course: parseInt(document.getElementById("inputCourse").value),
         shift: getStuShift(),
     });
