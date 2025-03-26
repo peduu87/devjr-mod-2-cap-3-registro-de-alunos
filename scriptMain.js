@@ -1,45 +1,47 @@
-$(document).ready(function(){
+function phoneMask() {
     $('.phone_with_ddd').mask('(00) 00000-0000');
-});
+}
+
+$(document).ready(phoneMask());
 
 // Object array that receives user information and stores it to be disposed.
-var regProducts = [
+var regStudents = [
     {
-        name: "Ryzen 5 5600X",
-        desc: "6-Core, 12-Threads, 3.7GHz (4.6GHz Turbo), Cache 35MB, AM4",
-        price: 134.90,
-        originCode: 3,
-        labels: ['l'],
+        name: "Pedro Henrique Silva",
+        email: "pedro.h.silva8787@gmail.com",
+        phone: 15996137562,
+        course: 3,
+        shift: "Noturno",
     },
     {
-        name: "Ryzen 7 5700X",
-        desc: "8-Core, 16-Threads, 3.4GHz (4.6GHz Turbo), Cache 36MB, AM4",
-        price: 159.90,
-        originCode: 3,
-        labels: ['o'],
+        name: "Gerivaldo de Souza",
+        email: "geri.souza1998@gmail.com",
+        phone: 15997177340,
+        course: 1,
+        shift: "Matutino",
     },
     {
-        name: "Ryzen 7 5800X",
-        desc: "8-Core, 16-Threads, 3.8GHz (4.7GHz Turbo), Cache 36MB, AM4",
-        price: 164.90,
-        originCode: 3,
-        labels: ['s', 'u'],
+        name: "Genilson Sobral de França",
+        email: "ge.franca@outlook.com",
+        phone: 11996283345,
+        course: 1,
+        shift: "Matutino",
+    },
+    {
+        name: "Anderson Silva",
+        email: "andsilvaufc@hotmail.com",
+        phone: 11998532020,
+        course: 4,
+        shift: "Vespetino",
     },
 ];
 
-// Hashmap, turns label code into HTML.
-const labels = new Map([
-    ['l', "<span title=\"Launch\" class=\"badge text-bg-primary fw-bold\">L</span>"],
-    ['s', "<span title=\"On Sale\" class=\"badge text-bg-success fw-bold\">S</span>"],
-    ['u', "<span title=\"Last Units\" class=\"badge text-bg-warning fw-bold\">U</span>"],
-    ['o', "<span title=\"Out Of Stock\" class=\"badge text-bg-danger fw-bold\">O</span>"],
-]);
-
-const origins = new Map([
+const courses = new Map([
     [0, "N/A"],
-    [1, "Own production"],
-    [2, "National"],
-    [3, "Imported"],
+    [1, "Eletrônica"],
+    [2, "Engenharia da Computação"],
+    [3, "Engenharia de Software"],
+    [4, "Sistemas de Informação"],
 ]);
 
 function loadTable() {
@@ -48,23 +50,17 @@ function loadTable() {
 
     tableBody.innerHTML = "";
 
-    for (let i = 0; i < regProducts.length; i++) {
-        let labelHtml = "";
-        
-        for (let label of regProducts[i].labels) {
-            
-            labelHtml += labels.get(label) + " ";
-            
-        }
-    
+    for (let i = 0; i < regStudents.length; i++) {
         tableBody.innerHTML +=
         `<th scope="row">${i + 1}</th>
-        <td>${regProducts[i].name}</td>
-        <td class="d-none d-lg-block">${regProducts[i].desc}</td>
-        <td>${regProducts[i].price}</td>
-        <td>${origins.get(regProducts[i].originCode)}</td>
-        <td class="d-none d-lg-block">${labelHtml.trim()}</td>`;
+        <td>${regStudents[i].name}</td>
+        <td class="d-none d-lg-table-cell">${regStudents[i].email}</td>
+        <td class="d-none d-lg-table-cell phone_with_ddd">${regStudents[i].phone}</td>
+        <td>${courses.get(regStudents[i].course)}</td>
+        <td>${regStudents[i].shift}</td>`;
     }    
+
+    phoneMask();
 }
 
 $(document).ready(loadTable());
@@ -84,9 +80,9 @@ function validateForm() {
         }
     }
 
-    const formSelect = document.getElementById("inputOrigin");
+    const formSelect = document.getElementById("inputCourse");
 
-    if (formSelect.value < 1 || formSelect.value > origins.length) {
+    if (formSelect.value < 1 || formSelect.value > courses.length) {
         formSelect.classList.add("border-danger");
         isFormValid = false;
     }
@@ -97,23 +93,25 @@ function validateForm() {
     return isFormValid;
 }
 
-function getProdLabels() {
-    const checkboxes = document.getElementsByClassName("origin-check");
-    let prodLabels = [];
+function getStuShift() {
+    const radios = document.getElementsByName("inputShift");
+    let stuShift = "";
 
-    for (let checkbox of checkboxes) {
-        if (checkbox.checked == true) {
-            prodLabels.push(checkbox.value);
+    for (let radio of radios) {
+        if (radio.checked == true) {
+            let selector = `label[for=\"${radio.id}\"]`
+
+            stuShift = document.querySelector(selector).innerHTML;
         }
     }
 
-    return prodLabels;
+    return stuShift;
 }
 
 function clearForm() {
     document.getElementById("inputName").value = "";
-    document.getElementById("inputDesc").value = "";
-    document.getElementById("inputPrice").value = "";
+    document.getElementById("inputEmail").value = "";
+    document.getElementById("inputPhone").value = "";
     let stdOptions = document.getElementsByClassName("std-option");
     
     for (let option of stdOptions) {
@@ -133,12 +131,12 @@ function submitForm(){
         return;
     }
 
-    regProducts.push({
+    regStudents.push({
         name: document.getElementById("inputName").value,
-        desc: document.getElementById("inputDesc").value,
-        price: parseFloat(document.getElementById("inputPrice").value),
-        originCode: parseInt(document.getElementById("inputOrigin").value),
-        labels: getProdLabels(),
+        email: document.getElementById("inputEmail").value,
+        phone: parseFloat(document.getElementById("inputPhone").value),
+        course: parseInt(document.getElementById("inputCourse").value),
+        shift: getStuShift(),
     });
 
     loadTable()

@@ -63,31 +63,27 @@
 
                 <div class="row py-2 align-items-center fs-5" style="width: 80%; margin: auto;">
                     <div class="col-12 col-lg-2">
-                        <label for="inputLabels" class="form-label">Labels:</label>
+                        <label for="inputShift" class="form-label">Período:</label>
                     </div>
                     <div class="col-12 col-lg-10">
-                        <div id="inputLabels">
+                        <div id="inputShift">
                             <div class="form-check">
-                                <input class="form-check-input origin-check" type="checkbox" value="l" id="launchCheck">
-                                <label for="launchCheck">Launch</label>
+                                <input class="form-check-input" name="periodRadio" type="radio" id="morningRadio">
+                                <label for="morningRadio">Matutino</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input origin-check" type="checkbox" value="s" id="saleCheck">
-                                <label for="saleCheck">Sale</label>
+                                <input class="form-check-input" name="periodRadio" type="radio" id="afternoonRadio">
+                                <label for="afternoonRadio">Vespertino</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input origin-check" type="checkbox" value="u" id="lastUnitsCheck">
-                                <label for="lastUnitsCheck">Last Units</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input origin-check" type="checkbox" value="o" id="outOfStockCheck">
-                                <label for="outOfStockCheck">Out Of Stock</label>
+                                <input class="form-check-input" name="periodRadio" type="radio" id="nightRadio">
+                                <label for="nightRadio">Noturno</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary fs-5 d-grid mt-3 mx-auto px-5" onclick="submitForm()">Submit</button>
+                <button type="button" class="btn btn-primary fs-5 d-grid mt-3 mx-auto px-5" onclick="submitForm()">Enviar</button>
             </form>
 
             <section class="py-4 p-lg-5">
@@ -103,10 +99,10 @@
                         <tr>
                             <th scope="col"></th>
                             <th scope="col">Nome</th>
-                            <th scope="col" class="d-none d-lg-block">Email</th>
-                            <th scope="col">Telefone</th>
+                            <th scope="col" class="d-none d-lg-table-cell">Email</th>
+                            <th scope="col" class="d-none d-lg-table-cell">Telefone</th>
                             <th scope="col">Curso</th>
-                            <th scope="col" class="d-none d-lg-block">Turno</th>
+                            <th scope="col">Turno</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
